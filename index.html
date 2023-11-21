@@ -4,10 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/styles.css">    
 </head>
 <body>
-    <h1>Test</h1>
+    <h1>Tic Tac Toe</h1>
+    <div class="container">
+        <form class="player-entry" id="player-entry">
+            <div class="player-1 player">
+                <img src="./img/X.png" class="entry-marker" alt="">
+                <label for="player1Name">Player 1 Name</label>
+                <input type="text" id="player1Name" placeholder="Player 1">
+            </div>
+            <p>vs.</p>
+            <div class="player-2 player">
+                <img src="./img/O.png" class="entry-marker" alt="">
+                <label for="player2Name">Player 2 Name</label>
+                <input type="text" id="player2Name" placeholder="Player 2">
+            </div>
+            <button class="newGame" id="newGame">New Game</button>
+        </form>
+        <div class="app" id="app"></div>
+        <!-- <button class="resetGame">Reset</button> -->
+    </div>
 <script src="app.js"></script>
+<!-- <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/joalfa" title="joalfa">joalfa</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
 </body>
 </html>
