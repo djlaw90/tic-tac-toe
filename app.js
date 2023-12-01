@@ -13,35 +13,50 @@ class Player {
       this.board = ['', '', '', '', '', '', '', '', ''];
       this.currentPlayer = null;
       this.winner = null;
+      this.isEventListenerAdded = false;
+
+      //DOM elements used in multiple methods
       this.app = document.getElementById('app');
       this.resetButton = document.getElementById('reset');
       this.playerEntry = document.getElementById('player-entry');
+      this.header = document.getElementById('h1');
     }
     
-    initDOM() {
-
-    }
     startGame() {
-      const player1Name = document.getElementById('player1Name').value || 'Player 1';
-      const player2Name = document.getElementById('player2Name').value || 'Player 2';
-
+      const player1Input = document.getElementById('player1Name');
+      const player2Input = document.getElementById('player2Name');
+    
+      let player1Name = player1Input.value || 'Player 1';
+      let player2Name = player2Input.value || 'Player 2';
+    
       this.player1 = new Player(player1Name, 'X', './img/X.png');
       this.player2 = new Player(player2Name, 'O', './img/O.png');
-
+    
       this.currentPlayer = this.player1;
       this.render();
+    
+      // Clear input values
+      player1Input.value = '';
+      player2Input.value = '';
     }
 
     makeMove(index) {
       if (!this.board[index] && !this.winner) {
         this.board[index] = this.currentPlayer.symbol;
+        this.render();
         if (this.checkWinner()) {
           this.winner = this.currentPlayer;
-          this.reset();
+          this.header.textContent = `${this.currentPlayer.name} wins!`;
+          this.reset(); 
+        } else if(!this.board.includes('')){
+           // Check for a draw
+           console.log('here')
+           this.header.textContent = "It's a draw!";
+           this.reset();
         } else {
           this.currentPlayer = this.currentPlayer === this.player1 ? this.player2 : this.player1;
+          this.render();
         }
-        this.render();
       }
     }
 
@@ -58,19 +73,14 @@ class Player {
           return true;
         }
       }
-
       return false;
     }
 
     render() {
-      const header = document.createElement('h2');
       const boardElement = document.createElement('div');
-
-      header.textContent = this.winner ? `${this.winner.name} wins!` : `Current Player: ${this.currentPlayer.name}`;
-
+      this.header.textContent = `Current Player: ${this.currentPlayer.name}`;
       this.app.innerHTML = '';
-      this.app.appendChild(header);
-
+      
       boardElement.className = 'board';
       for (let i = 0; i < 9; i++) {
           const cellElement = document.createElement('div');
@@ -91,20 +101,28 @@ class Player {
 
     showBoard() {
       this.resetButton.classList.add('hide');
-      this.playerEntry.addEventListener('submit', (event) => {
-        event.preventDefault();
-        this.playerEntry.classList.add('hide');
-        this.app.classList.remove('hide');
-        this.startGame();
-      });
+
+      if(!this.isEventListenerAdded) {
+        this.playerEntry.addEventListener('submit', (event) => {
+          event.preventDefault();
+          this.playerEntry.classList.add('hide');
+          this.app.classList.remove('hide');
+          this.startGame();
+        });
+      }
+      this.isEventListenerAdded = true;
     }
 
     reset() {
       this.resetButton.classList.remove('hide');
       this.resetButton.addEventListener('click', (event) => {
+        this.header.textContent = "Tic Tac Toe";
         this.playerEntry.classList.remove('hide');
         this.app.classList.add('hide');
         this.resetButton.classList.add('hide');
+        this.board = ['', '', '', '', '', '', '', '', ''];
+        this.currentPlayer = this.player1;
+        this.winner = null;
       });
     }
   }
