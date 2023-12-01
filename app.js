@@ -18,9 +18,10 @@ class Player {
     startGame() {
       const player1Name = document.getElementById('player1Name').value || 'Player 1';
       const player2Name = document.getElementById('player2Name').value || 'Player 2';
-      console.log(player1Name, player2Name)
+
       this.player1 = new Player(player1Name, 'X', './img/X.png');
       this.player2 = new Player(player2Name, 'O', './img/O.png');
+
       this.currentPlayer = this.player1;
       this.render();
     }
@@ -30,6 +31,7 @@ class Player {
         this.board[index] = this.currentPlayer.symbol;
         if (this.checkWinner()) {
           this.winner = this.currentPlayer;
+          this.reset();
         } else {
           this.currentPlayer = this.currentPlayer === this.player1 ? this.player2 : this.player1;
         }
@@ -67,6 +69,8 @@ class Player {
       for (let i = 0; i < 9; i++) {
           const cellElement = document.createElement('div');
           cellElement.className = 'cell';
+          
+          //Make sure cell isn't blank before placing marker
           if(this.board[i]) {
             const symbolImage = document.createElement('img');
             symbolImage.src = this.board[i] === 'X' ? this.player1.image : this.player2.image;
@@ -79,9 +83,11 @@ class Player {
       appElement.appendChild(boardElement);
     }
 
-    addEventListeners() {
+    showBoard() {
       const app = document.getElementById('app');
+      const reset = document.getElementById('reset');
       const playerEntry = document.getElementById('player-entry');
+      reset.classList.add('hide');
       playerEntry.addEventListener('submit', (event) => {
         event.preventDefault();
         playerEntry.classList.add('hide');
@@ -89,10 +95,22 @@ class Player {
         this.startGame();
       });
     }
+
+    reset() {
+      const app = document.getElementById('app');
+      const reset = document.getElementById('reset');
+      const playerEntry = document.getElementById('player-entry');
+      reset.classList.remove('hide');
+      reset.addEventListener('click', (event) => {
+        playerEntry.classList.remove('hide');
+        app.classList.add('hide');
+        reset.classList.add('hide');
+      });
+    }
   }
 
   //initialize app
   (function () {
     const ticTacToe = new TicTacToe();
-    ticTacToe.addEventListeners();
+    ticTacToe.showBoard();
   })();

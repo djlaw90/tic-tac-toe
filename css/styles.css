@@ -82,6 +82,10 @@ h1 {
     gap: 10px;
 }
 
+.player label {
+    font-weight: bold;
+    text-align: center;
+}
 .entry-marker {
     width: 3rem;
     align-self: center;
