@@ -13,8 +13,14 @@ class Player {
       this.board = ['', '', '', '', '', '', '', '', ''];
       this.currentPlayer = null;
       this.winner = null;
+      this.app = document.getElementById('app');
+      this.resetButton = document.getElementById('reset');
+      this.playerEntry = document.getElementById('player-entry');
     }
+    
+    initDOM() {
 
+    }
     startGame() {
       const player1Name = document.getElementById('player1Name').value || 'Player 1';
       const player2Name = document.getElementById('player2Name').value || 'Player 2';
@@ -57,14 +63,14 @@ class Player {
     }
 
     render() {
-      const appElement = document.getElementById('app');
-      appElement.innerHTML = '';
-
       const header = document.createElement('h2');
-      header.textContent = this.winner ? `${this.winner.name} wins!` : `Current Player: ${this.currentPlayer.name}`;
-      appElement.appendChild(header);
-
       const boardElement = document.createElement('div');
+
+      header.textContent = this.winner ? `${this.winner.name} wins!` : `Current Player: ${this.currentPlayer.name}`;
+
+      this.app.innerHTML = '';
+      this.app.appendChild(header);
+
       boardElement.className = 'board';
       for (let i = 0; i < 9; i++) {
           const cellElement = document.createElement('div');
@@ -80,31 +86,25 @@ class Player {
           cellElement.addEventListener('click', () => this.makeMove(i));
           boardElement.appendChild(cellElement);
       }
-      appElement.appendChild(boardElement);
+      this.app.appendChild(boardElement);
     }
 
     showBoard() {
-      const app = document.getElementById('app');
-      const reset = document.getElementById('reset');
-      const playerEntry = document.getElementById('player-entry');
-      reset.classList.add('hide');
-      playerEntry.addEventListener('submit', (event) => {
+      this.resetButton.classList.add('hide');
+      this.playerEntry.addEventListener('submit', (event) => {
         event.preventDefault();
-        playerEntry.classList.add('hide');
-        app.classList.remove('hide');
+        this.playerEntry.classList.add('hide');
+        this.app.classList.remove('hide');
         this.startGame();
       });
     }
 
     reset() {
-      const app = document.getElementById('app');
-      const reset = document.getElementById('reset');
-      const playerEntry = document.getElementById('player-entry');
-      reset.classList.remove('hide');
-      reset.addEventListener('click', (event) => {
-        playerEntry.classList.remove('hide');
-        app.classList.add('hide');
-        reset.classList.add('hide');
+      this.resetButton.classList.remove('hide');
+      this.resetButton.addEventListener('click', (event) => {
+        this.playerEntry.classList.remove('hide');
+        this.app.classList.add('hide');
+        this.resetButton.classList.add('hide');
       });
     }
   }
