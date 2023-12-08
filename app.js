@@ -1,12 +1,12 @@
 'use strict'
 
 class Player {
-    constructor(name, symbol, image) {
-      this.name = name;
-      this.symbol = symbol;
-      this.image = image;
-    }
+  constructor(name, symbol, image) {
+    this.name = name;
+    this.symbol = symbol;
+    this.image = image;
   }
+}
 
   class TicTacToe {
     constructor() {
@@ -14,21 +14,46 @@ class Player {
       this.currentPlayer = null;
       this.winner = null;
       this.isEventListenerAdded = false;
-
       //DOM elements used in multiple methods
+      this.chooseHumanBot();
       this.app = document.getElementById('app');
       this.resetButton = document.getElementById('reset');
       this.playerEntry = document.getElementById('player-entry');
       this.header = document.getElementById('h1');
+      this.chooseHumanBotSelection = document.getElementById('player-bot-choice');
+      this.botGame = false;
+    }
+
+    chooseHumanBot() {
+      const chooseHumanButton = document.getElementById('choose-human');
+      const chooseBotButton = document.getElementById('choose-bot');
+      const player2Label = document.getElementById('player-2-label');
+  
+      chooseHumanButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.chooseHumanBotSelection.classList.add('hide');
+        this.playerEntry.classList.remove('hide');
+        this.chooseHumanBotSelection.classList.add('hide');
+        this.showPlayerEntry();
+      });
+  
+      chooseBotButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.chooseHumanBotSelection.classList.add('hide');
+        this.playerEntry.classList.remove('hide');
+        this.chooseHumanBotSelection.classList.add('hide');
+        this.botGame = true;
+        player2Label.textContent = 'Computer Name';
+        this.showPlayerEntry();
+      });
     }
     
     startGame() {
       const player1Input = document.getElementById('player1Name');
       const player2Input = document.getElementById('player2Name');
-    
       let player1Name = player1Input.value || 'Player 1';
       let player2Name = player2Input.value || 'Player 2';
-    
+      
       this.player1 = new Player(player1Name, 'X', './img/X.png');
       this.player2 = new Player(player2Name, 'O', './img/O.png');
     
@@ -50,7 +75,6 @@ class Player {
           this.reset(); 
         } else if(!this.board.includes('')){
            // Check for a draw
-           console.log('here')
            this.header.textContent = "It's a draw!";
            this.reset();
         } else {
@@ -99,7 +123,7 @@ class Player {
       this.app.appendChild(boardElement);
     }
 
-    showBoard() {
+    showPlayerEntry() {
       this.resetButton.classList.add('hide');
 
       if(!this.isEventListenerAdded) {
@@ -117,7 +141,7 @@ class Player {
       this.resetButton.classList.remove('hide');
       this.resetButton.addEventListener('click', (event) => {
         this.header.textContent = "Tic Tac Toe";
-        this.playerEntry.classList.remove('hide');
+        this.chooseHumanBotSelection.classList.remove('hide');
         this.app.classList.add('hide');
         this.resetButton.classList.add('hide');
         this.board = ['', '', '', '', '', '', '', '', ''];
@@ -130,5 +154,4 @@ class Player {
   //initialize app
   (function () {
     const ticTacToe = new TicTacToe();
-    ticTacToe.showBoard();
   })();

@@ -10,16 +10,20 @@
 <body>
     <h1 id="h1">Tic Tac Toe</h1>
     <div class="container">
-        <form class="player-entry" id="player-entry">
+        <form class="player-bot-choice" id="player-bot-choice">
+            <button id="choose-human">Human vs. Human</button>
+            <button id="choose-bot">Human vs. Bot</button>
+        </form>
+        <form class="hide player-entry" id="player-entry">
             <div class="player-1 player">
                 <img src="./img/X.png" class="entry-marker" alt="">
-                <label for="player1Name">Player 1 Name</label>
+                <label for="player1Name" id="player-1-label">Player 1 Name</label>
                 <input type="text" id="player1Name">
             </div>
             <p>vs.</p>
             <div class="player-2 player">
                 <img src="./img/O.png" class="entry-marker" alt="">
-                <label for="player2Name">Player 2 Name</label>
+                <label for="player2Name" id="player-2-label">Player 2 Name</label>
                 <input type="text" id="player2Name">
             </div>
             <button class="newGame" id="newGame">New Game</button>
