@@ -63,14 +63,15 @@ class Player {
       }
 
       if(player1Symbol === player2Symbol) {
-        alert("Player symbols are the same. Please select 2 different symbols.");
-        this.playerEntry.classList.remove('hide');
-      } else {
-        this.player1 = new Player(player1Name, player1Symbol, `./img/${player1Symbol}.png`);
-        this.player2 = new Player(player2Name, player2Symbol, `./img/${player2Symbol}.png`);
-        this.currentPlayer = this.player1;
-        this.render();
-      }
+        // alert("Player symbols are the same. Please select 2 different symbols.");
+        // this.playerEntry.classList.remove('hide');
+      } 
+
+      this.player1 = new Player(player1Name, player1Symbol, `./img/${player1Symbol}.png`);
+      this.player2 = new Player(player2Name, player2Symbol, `./img/${player2Symbol}.png`);
+      this.currentPlayer = this.player1;
+      this.render();
+      
       // Clear input values
       player1NameInput.value = '';
       player2NameInput.value = '';
