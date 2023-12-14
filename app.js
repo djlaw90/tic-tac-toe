@@ -28,6 +28,7 @@ class Player {
       const chooseHumanButton = document.getElementById('choose-human');
       const chooseBotButton = document.getElementById('choose-bot');
       const player2Label = document.getElementById('player-2-label');
+      const player2Icon = document.getElementById('player-2-icon');
   
       chooseHumanButton.addEventListener('click', (e) => {
         e.preventDefault();
@@ -44,25 +45,36 @@ class Player {
         this.chooseHumanBotSelection.classList.add('hide');
         this.botGame = true;
         player2Label.textContent = 'Computer Name';
+        player2Icon.src = "./img/icons8-cyborg-48.png";
         this.showPlayerEntry();
       });
     }
     
     startGame() {
-      const player1Input = document.getElementById('player1Name');
-      const player2Input = document.getElementById('player2Name');
-      let player1Name = player1Input.value || 'Player 1';
-      let player2Name = player2Input.value || 'Player 2';
-      
-      this.player1 = new Player(player1Name, 'X', './img/X.png');
-      this.player2 = new Player(player2Name, 'O', './img/O.png');
-    
-      this.currentPlayer = this.player1;
-      this.render();
-    
+      const player1NameInput = document.getElementById('player1Name');
+      const player2NameInput = document.getElementById('player2Name');
+      let player1Name = player1NameInput.value || 'Player 1';
+      let player2Name = player2NameInput.value || 'Player 2';
+      let player1Symbol = document.querySelector('input[name="symbol-select-p1"]:checked').value;
+      let player2Symbol = document.querySelector('input[name="symbol-select-p2"]:checked').value;
+     
+      if(this.botGame) {
+        player2Name = "Computer";
+      }
+
+      if(player1Symbol === player2Symbol) {
+        alert("Player symbols are the same. Please select 2 different symbols.");
+        this.playerEntry.classList.remove('hide');
+      } else {
+        this.player1 = new Player(player1Name, player1Symbol, `./img/${player1Symbol}.png`);
+        this.player2 = new Player(player2Name, player2Symbol, `./img/${player2Symbol}.png`);
+        this.currentPlayer = this.player1;
+        this.render();
+      }
       // Clear input values
-      player1Input.value = '';
-      player2Input.value = '';
+      player1NameInput.value = '';
+      player2NameInput.value = '';
+
     }
 
     makeMove(index) {
@@ -73,15 +85,20 @@ class Player {
           this.winner = this.currentPlayer;
           this.header.textContent = `${this.currentPlayer.name} wins!`;
           this.reset(); 
-        } else if(!this.board.includes('')){
+        } else if (!this.board.includes('')){
            // Check for a draw
            this.header.textContent = "It's a draw!";
            this.reset();
         } else {
-          this.currentPlayer = this.currentPlayer === this.player1 ? this.player2 : this.player1;
-          this.render();
-        }
+            this.currentPlayer = this.currentPlayer === this.player1 ? this.player2 : this.player1;
+            this.render();
+          }
       }
+    }
+
+    makeBotMove() {
+      console.log(this.botGame)
+      console.log("Bot's turn")
     }
 
     checkWinner() {
@@ -125,7 +142,6 @@ class Player {
 
     showPlayerEntry() {
       this.resetButton.classList.add('hide');
-
       if(!this.isEventListenerAdded) {
         this.playerEntry.addEventListener('submit', (event) => {
           event.preventDefault();

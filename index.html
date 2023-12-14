@@ -11,23 +11,55 @@
     <h1 id="h1">Tic Tac Toe</h1>
     <div class="container">
         <form class="player-bot-choice" id="player-bot-choice">
-            <button id="choose-human">Human vs. Human</button>
-            <button id="choose-bot">Human vs. Bot</button>
-        </form>
-        <form class="hide player-entry" id="player-entry">
-            <div class="player-1 player">
-                <img src="./img/X.png" class="entry-marker" alt="">
-                <label for="player1Name" id="player-1-label">Player 1 Name</label>
-                <input type="text" id="player1Name">
+            <div class="humanVsHuman player-bot-selection">
+                <div class="human-bot-icon-group">
+                    <img src="./img/icons8-human-48.png" alt="human icon">
+                    <img src="./img/icons8-human-48.png" alt="human icon">
+                </div>
+                <button id="choose-human">Human vs. Human</button>
             </div>
-            <p>vs.</p>
-            <div class="player-2 player">
-                <img src="./img/O.png" class="entry-marker" alt="">
-                <label for="player2Name" id="player-2-label">Player 2 Name</label>
-                <input type="text" id="player2Name">
+            <div class="humanVsBot player-bot-selection">
+                <div class="human-bot-icon-group">
+                    <img src="./img/icons8-human-48.png" alt="human icon">
+                    <img src="./img/icons8-cyborg-48.png" alt="cyborg icon">
+                </div>
+                <button id="choose-bot">Human vs. Bot</button>
             </div>
-            <button class="newGame" id="newGame">New Game</button>
         </form>
+        <div class="player-entry hide" id="player-entry">
+            <form>
+                <div class="player-1 player">
+                    <fieldset>
+                        <img src="./img/icons8-human-48.png" class="player-selection-icon" alt="human icon">
+                        <label for="player1Name" id="player-1-label">Player 1 Name</label>
+                        <input type="text" id="player1Name">
+                        <div class="symbol-selection">
+                            <img src="./img/X.png" class="entry-marker" alt="" id="player-1-x">
+                            <input type="radio" name="symbol-select-p1" value="X" checked="checked" />
+                            <img src="./img/O.png" class="entry-marker" alt="" id="player-1-o">
+                            <input type="radio" name="symbol-select-p1" value="O" />
+                        </div>
+                    </fieldset>
+                </div>
+            </form>
+            <form>
+                <div class="player-2 player">
+                    <fieldset>
+                        <img src="./img/icons8-human-48.png" alt="human icon" class="player-selection-icon" id="player-2-icon">
+                        <label for="player2Name" id="player-2-label">Player 2 Name</label>
+                        <input type="text" id="player2Name">
+                        <div class="symbol-selection">
+                            <img src="./img/X.png" class="entry-marker" alt="" id="player-2-x">
+                            <input type="radio" name="symbol-select-p2" value="X" />
+                            <img src="./img/O.png" class="entry-marker" alt="">
+                            <input type="radio" name="symbol-select-p2" value="O" id="player-2-o" checked="checked" />
+                        </div>
+                    </fieldset>
+                </div>
+                <button class="newGame" id="newGame">New Game</button>
+            </form>
+            
+        </div>
         <div class="app" id="app"></div>
         <button class="resetGame hide" id="reset">Reset</button>
     </div>
