@@ -143,7 +143,7 @@ class Player {
     showPlayerEntry() {
       this.resetButton.classList.add('hide');
       if(!this.isEventListenerAdded) {
-        this.playerEntry.addEventListener('submit', (event) => {
+        this.playerEntry.addEventListener('click', (event) => {
           event.preventDefault();
           this.playerEntry.classList.add('hide');
           this.app.classList.remove('hide');

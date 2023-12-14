@@ -6,6 +6,10 @@
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/styles.css">    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Preahvihear&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <h1 id="h1">Tic Tac Toe</h1>
@@ -16,14 +20,14 @@
                     <img src="./img/icons8-human-48.png" alt="human icon">
                     <img src="./img/icons8-human-48.png" alt="human icon">
                 </div>
-                <button id="choose-human">Human vs. Human</button>
+                <button id="choose-human" class="button-30">Human vs. Human</button>
             </div>
             <div class="humanVsBot player-bot-selection">
                 <div class="human-bot-icon-group">
                     <img src="./img/icons8-human-48.png" alt="human icon">
                     <img src="./img/icons8-cyborg-48.png" alt="cyborg icon">
                 </div>
-                <button id="choose-bot">Human vs. Bot</button>
+                <button id="choose-bot" class="button-30">Human vs. Bot</button>
             </div>
         </form>
         <div class="player-entry hide" id="player-entry">
@@ -56,12 +60,11 @@
                         </div>
                     </fieldset>
                 </div>
-                <button class="newGame" id="newGame">New Game</button>
             </form>
-            
+            <button class="newGame button-30" id="newGame">New Game</button>
         </div>
         <div class="app" id="app"></div>
-        <button class="resetGame hide" id="reset">Reset</button>
+        <button class="resetGame hide button-30" id="reset">Reset</button>
     </div>
 <script src="app.js"></script>
 <!-- <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/joalfa" title="joalfa">joalfa</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
