@@ -10,12 +10,10 @@ class Player {
 
   class TicTacToe {
     constructor() {
+      this.showHumanBotChoiceScreen();
       this.board = ['', '', '', '', '', '', '', '', ''];
       this.currentPlayer = null;
       this.winner = null;
-      this.isEventListenerAdded = false;
-      //DOM elements used in multiple methods
-      this.chooseHumanBot();
       this.app = document.getElementById('app');
       this.resetButton = document.getElementById('reset');
       this.playerEntry = document.getElementById('player-entry');
@@ -24,7 +22,7 @@ class Player {
       this.botGame = false;
     }
 
-    chooseHumanBot() {
+    showHumanBotChoiceScreen() {
       const chooseHumanButton = document.getElementById('choose-human');
       const chooseBotButton = document.getElementById('choose-bot');
       const player2Label = document.getElementById('player-2-label');
@@ -35,7 +33,7 @@ class Player {
         this.chooseHumanBotSelection.classList.add('hide');
         this.playerEntry.classList.remove('hide');
         this.chooseHumanBotSelection.classList.add('hide');
-        this.showPlayerEntry();
+        this.initGameState();
       });
   
       chooseBotButton.addEventListener('click', (e) => {
@@ -46,32 +44,46 @@ class Player {
         this.botGame = true;
         player2Label.textContent = 'Computer Name';
         player2Icon.src = "./img/icons8-cyborg-48.png";
-        this.showPlayerEntry();
+        this.initGameState();
       });
     }
     
-    startGame() {
+    initGameState() {
       const player1NameInput = document.getElementById('player1Name');
       const player2NameInput = document.getElementById('player2Name');
+      const newGameButton = document.getElementById('newGame');
       let player1Name = player1NameInput.value || 'Player 1';
       let player2Name = player2NameInput.value || 'Player 2';
-      let player1Symbol = document.querySelector('input[name="symbol-select-p1"]:checked').value;
-      let player2Symbol = document.querySelector('input[name="symbol-select-p2"]:checked').value;
+
      
       if(this.botGame) {
         player2Name = "Computer";
       }
 
-      if(player1Symbol === player2Symbol) {
-        // alert("Player symbols are the same. Please select 2 different symbols.");
-        // this.playerEntry.classList.remove('hide');
-      } 
-
-      this.player1 = new Player(player1Name, player1Symbol, `./img/${player1Symbol}.png`);
-      this.player2 = new Player(player2Name, player2Symbol, `./img/${player2Symbol}.png`);
-      this.currentPlayer = this.player1;
-      this.render();
+      //Bug-- players can't choose
       
+
+      newGameButton.addEventListener('click', (e) => {
+        let player1Symbol = document.querySelector('input[name="symbol-select-p1"]:checked').value;
+        let player2Symbol = document.querySelector('input[name="symbol-select-p2"]:checked').value;
+        console.log(player1Symbol === player2Symbol);
+        e.preventDefault();
+        console.log(player1Symbol, player2Symbol)
+        if(player1Symbol === player2Symbol) {
+          console.log('here');
+          alert("Player symbols are the same. Please select 2 different symbols.");
+          return;
+        } else {
+          console.log(player1Symbol)
+          console.log(player2Symbol)
+          this.player1 = new Player(player1Name, player1Symbol, `./img/${player1Symbol}.png`);
+          console.log(this.player1)
+          this.player2 = new Player(player2Name, player2Symbol, `./img/${player2Symbol}.png`);
+          console.log(this.player2)
+          this.currentPlayer = this.player1;
+          this.render();
+        }
+      });
       // Clear input values
       player1NameInput.value = '';
       player2NameInput.value = '';
@@ -119,19 +131,22 @@ class Player {
     }
 
     render() {
+      this.playerEntry.classList.add('hide');
       const boardElement = document.createElement('div');
       this.header.textContent = `Current Player: ${this.currentPlayer.name}`;
       this.app.innerHTML = '';
-      
+      this.app.classList.remove('hide');
+
       boardElement.className = 'board';
       for (let i = 0; i < 9; i++) {
           const cellElement = document.createElement('div');
           cellElement.className = 'cell';
           
           //Make sure cell isn't blank before placing marker
+          //Fix this so image is the image the user selected
           if(this.board[i]) {
             const symbolImage = document.createElement('img');
-            symbolImage.src = this.board[i] === 'X' ? this.player1.image : this.player2.image;
+            symbolImage.src = this.board[i] === this.player1.symbol ? this.player1.image : this.player2.image;
             cellElement.appendChild(symbolImage);
           }
           
@@ -141,22 +156,10 @@ class Player {
       this.app.appendChild(boardElement);
     }
 
-    showPlayerEntry() {
-      this.resetButton.classList.add('hide');
-      if(!this.isEventListenerAdded) {
-        this.playerEntry.addEventListener('click', (event) => {
-          event.preventDefault();
-          this.playerEntry.classList.add('hide');
-          this.app.classList.remove('hide');
-          this.startGame();
-        });
-      }
-      this.isEventListenerAdded = true;
-    }
-
     reset() {
       this.resetButton.classList.remove('hide');
       this.resetButton.addEventListener('click', (event) => {
+        this.app.innerHTML = ''; // Clear the app element
         this.header.textContent = "Tic Tac Toe";
         this.chooseHumanBotSelection.classList.remove('hide');
         this.app.classList.add('hide');
