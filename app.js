@@ -97,21 +97,50 @@ class Player {
         if (this.checkWinner()) {
           this.winner = this.currentPlayer;
           this.header.textContent = `${this.currentPlayer.name} wins!`;
-          this.reset(); 
-        } else if (!this.board.includes('')){
-           // Check for a draw
-           this.header.textContent = "It's a draw!";
-           this.reset();
+          this.reset();
+        } else if (!this.board.includes('')) {
+          this.header.textContent = "It's a draw!";
+          this.reset();
         } else {
-            this.currentPlayer = this.currentPlayer === this.player1 ? this.player2 : this.player1;
-            this.render();
+          this.currentPlayer = this.currentPlayer === this.player1 ? this.player2 : this.player1;
+          this.render();
+          // After a human move, make the bot move
+          if (this.botGame && this.currentPlayer === this.player2) {
+            setTimeout(() => this.makeBotMove(), 500); // Add a delay for better user experience
           }
+        }
       }
     }
 
     makeBotMove() {
-      console.log(this.botGame)
-      console.log("Bot's turn")
+      if (!this.winner) {
+        // Filter available (empty) cells
+        const availableCells = this.board.reduce((acc, cell, index) => {
+          if (!cell) acc.push(index);
+          return acc;
+        }, []);
+    
+        // Randomly select an available cell
+        const randomIndex = Math.floor(Math.random() * availableCells.length);
+        const botMove = availableCells[randomIndex];
+    
+        // Make the bot move
+        this.board[botMove] = this.player2.symbol;
+    
+        // Check for a winner or switch to the next player
+        this.render();
+        if (this.checkWinner()) {
+          this.winner = this.player2;
+          this.header.textContent = `${this.player2.name} wins!`;
+          this.reset();
+        } else if (!this.board.includes('')) {
+          this.header.textContent = "It's a draw!";
+          this.reset();
+        } else {
+          this.currentPlayer = this.player1;
+          this.render();
+        }
+      }
     }
 
     checkWinner() {
